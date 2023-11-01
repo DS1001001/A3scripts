@@ -298,3 +298,22 @@ if (_mode == "RC") exitWith
 		(_this select 1) setVariable ["pyaPylonStatus",1];
 	};
 };
+if (_mode == "reload") exitWith
+{
+	private _pcount = 0;
+	private _duration = 0;
+	cutText ["", "BLACK OUT"];
+	cutText ["<t color='#AAAAAA' size= '3'>RELOADING WEAPONS</t>", "BLACK", 4, true, true];
+	{
+		if (_x isKindOf "pya_main_base") then 
+		{
+			_x setVehicleAmmo 1;
+			_pcount = _pcount + 1;
+		}
+	} forEach attachedObjects _veh;
+	sleep 5;
+	_duration = 0.03 * _pcount;
+	skipTime _duration;
+	cutText ["", "BLACK IN"];
+	[_veh,"AMMO"] spawn uAVm_fnc_attachedPylons;
+};
